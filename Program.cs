@@ -94,27 +94,68 @@ internal class Program
                 Console.WriteLine("There was an error.");
             }
 
-            //Erase All records
-
-            q.DeleteAll<Pokemon>();
-            q.DeleteAll<BannedGame>();
-
-
-            //Write all objects in a collection to the database
-
-            foreach(var pk in pokemons)
+            
+            using (var builder = new QueryBuilder(dbPath))
             {
-                q.Create(pk);
-                
-            }
 
-            Pokemon pokemon = new Pokemon(222, 54, "Bah", "idk", "idkagain", "idk", 2, 2, 2, 2, 2, 2, 2, 2);
-            q.Create(pokemon);
+                try
+                {
+                    builder.DeleteAll<Pokemon>();
+                    Console.WriteLine("All Pokemon successfully deleted!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occured while deleting Pokemon: {ex.Message}");
+                }
 
 
-            foreach (var bg in bannedGames)
-            {
-                q.Create(bg);
+                try
+                {
+                    builder.DeleteAll<BannedGame>();
+                    Console.WriteLine("All games successfully deleted!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occured while deleting games: {ex.Message}");
+                }
+
+
+                foreach (Pokemon mon in pokemons)
+                {
+                    builder.Create(mon);
+                    Console.WriteLine($"Pokemon {mon.Name} successfully added!");
+                }
+
+                foreach (BannedGame game in bannedGames)
+                {
+                    builder.Create(game);
+                    Console.WriteLine($"Game {game.Title} successfully added!");
+                }
+
+                try
+                {
+                    Pokemon testPokemon = new Pokemon(0, 1, "Name", "Form", "Type1", "Type2", 0, 0, 0, 0, 0, 0, 0, 1);
+                    builder.Create(testPokemon);
+                    Console.WriteLine($"Pokemon successfully added!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"There was an error adding your Pokemon to the list: {ex.Message}");
+                }
+
+                try
+                {
+                    BannedGame testBannedGame = new BannedGame(137, "Title", "Series", "Country", "Details");
+                    builder.Create(testBannedGame);
+                    Console.WriteLine($"Game successfully added!");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"There was an error adding your game to the list: {ex.Message}");
+                }
+
+
+
             }
 
 
