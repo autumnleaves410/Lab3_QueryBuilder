@@ -114,8 +114,11 @@ namespace Lab3QueryBuilder
 
         public void Create<T>(T obj) where T : IClassModel
         {
+            // this code will be the same as Create, minus the SQL command
+            // get the property names of the object 
             PropertyInfo[] properties = typeof(T).GetProperties();
 
+            // get property values
             var values = new List<string>();
             var names = new List<string>();
             PropertyInfo property;
@@ -143,8 +146,10 @@ namespace Lab3QueryBuilder
                 names.Add(property.Name);
             }
 
+            // build the insert statement
             StringBuilder sb = new StringBuilder();
-            StringBuilder sb2 = new StringBuilder();
+            StringBuilder sbTwo = new StringBuilder();
+
 
             // include commas in between values / names UNLESS you're on the last item
             for (int i = 0; i < values.Count; i++)
@@ -152,19 +157,19 @@ namespace Lab3QueryBuilder
                 if (i == values.Count - 1)
                 {
                     sb.Append($"{names[i]}");
-                    sb2.Append($"{values[i]}");
+                    sbTwo.Append($"{values[i]}");
                 }
                 else
                 {
-                    sb.Append($"{names[i]},");
-                    sb2.Append($"{values[i]}");
+                    sb.Append($"{names[i]}, ");
+                    sbTwo.Append($"{values[i]}, ");
                 }
             }
 
             var command = connection.CreateCommand();
-            command.CommandText = $"INSERT INTO {typeof(T).Name} ({sb}) VALUES ({sb2})";
-            var reader = command.ExecuteNonQuery();
+            command.CommandText += $"INSERT INTO {obj.GetType().Name} ({sb}) VALUES ({sbTwo});";
 
+            var reader = command.ExecuteNonQuery();
         }
 
         /// <summary>
