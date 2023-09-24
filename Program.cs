@@ -120,23 +120,23 @@ internal class Program
                 }
 
 
-                foreach (Pokemon mon in pokemons)
+                foreach (Pokemon aPokemon in pokemons)
                 {
-                    builder.Create(mon);
-                    Console.WriteLine($"Pokemon {mon.Name} successfully added!");
+                    builder.Create(aPokemon);
+                    Console.WriteLine($"Pokemon, {aPokemon.Name}, successfully added!");
                 }
 
                 foreach (BannedGame game in bannedGames)
                 {
                     builder.Create(game);
-                    Console.WriteLine($"Game {game.Title} successfully added!");
+                    Console.WriteLine($"Game, {game.Title}, successfully added!");
                 }
 
                 try
                 {
-                    Pokemon testPokemon = new Pokemon(0, 1, "Name", "Form", "Type1", "Type2", 0, 0, 0, 0, 0, 0, 0, 1);
-                    builder.Create(testPokemon);
-                    Console.WriteLine($"Pokemon successfully added!");
+                    Pokemon examplePokemon = new Pokemon(0, 1, "Auty", "idk", "huh", "what", 0, 0, 0, 0, 0, 0, 0, 1);
+                    builder.Create(examplePokemon);
+                    Console.WriteLine($"Your Pokemon was successfully added!");
                 }
                 catch (Exception ex)
                 {
@@ -145,8 +145,8 @@ internal class Program
 
                 try
                 {
-                    BannedGame testBannedGame = new BannedGame(137, "Title", "Series", "Country", "Details");
-                    builder.Create(testBannedGame);
+                    BannedGame testGame = new BannedGame(137, "RandomTitile", "Aeries", "USA", "RandomFacts");
+                    builder.Create(testGame);
                     Console.WriteLine($"Game successfully added!");
                 }
                 catch (Exception ex)
@@ -172,17 +172,7 @@ internal class Program
 
 
 
-        
-
-
-
-
-
-
-
-
-
-        //Write a single object to the database
+       
 
 
     }
